@@ -134,3 +134,9 @@ h1 {
 .file-editor button:hover {
   background-color: #45a049;
 }
+.parent-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
