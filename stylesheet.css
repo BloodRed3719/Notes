@@ -7,7 +7,7 @@ body {
 }
 
 .parent-container {
-  text-align: center;
+  align: center;
 }
 
 .container {
