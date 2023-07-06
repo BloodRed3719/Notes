@@ -23,7 +23,15 @@
       margin-bottom: 5px;
     }
 
-    
+    /* Apply identical styling to the inputs */
+    .input-field {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: none;
+    }
 
     .button-container {
       display: flex;
@@ -91,3 +99,4 @@
       margin-left: 10px;
     }
 </style>
+
