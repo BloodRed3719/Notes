@@ -23,21 +23,14 @@
       margin-bottom: 5px;
     }
 
-    input[type="username"],
-    input[type="password"],
-    textarea {
+    /* Set a specific width for the inputs */
+    .input-field {
       width: 100%;
       padding: 8px;
       margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
       resize: none;
-    }
-
-    /* Set a specific width for the inputs */
-    input[type="username"],
-    input[type="password"] {
-      width: 100%;
     }
 
     .button-container {
@@ -106,4 +99,3 @@
       margin-left: 10px;
     }
 </style>
-
