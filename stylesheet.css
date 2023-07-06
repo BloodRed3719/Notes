@@ -23,8 +23,9 @@
       margin-bottom: 5px;
     }
 
-    /* Set a specific width for the inputs */
-    .input-field {
+    input[type="text"],
+    input[type="password"],
+    textarea {
       width: 100%;
       padding: 8px;
       margin-bottom: 10px;
