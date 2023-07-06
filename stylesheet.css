@@ -34,10 +34,9 @@
       resize: none;
     }
 
-    /* Set a specific width for the inputs and textarea */
+    /* Set a specific width for the inputs */
     input[type="username"],
-    input[type="password"],
-    textarea {
+    input[type="password"] {
       width: 100%;
     }
 
@@ -106,4 +105,4 @@
     .file-editor button + button {
       margin-left: 10px;
     }
-  </style>
+</style>
