@@ -3,6 +3,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: #222;
 }
 
 .parent-container {
@@ -13,12 +14,15 @@ body {
   display: inline-block;
   max-width: 400px;
   padding: 20px;
-  background-color: #f5f5f5;
+  background-color: #333;
   border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 h1 {
-  text-align: center;
+  color: #fff;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 .label-container {
@@ -30,6 +34,7 @@ h1 {
 .label-container label {
   flex: 1;
   font-weight: bold;
+  color: #fff;
 }
 
 .input-container {
@@ -39,9 +44,10 @@ h1 {
 
 .input-container input {
   width: 100%;
-  padding: 5px;
+  padding: 8px 10px;
   border-radius: 3px;
   border: 1px solid #ccc;
+  font-size: 14px;
 }
 
 .button-container {
@@ -57,10 +63,16 @@ h1 {
   background-color: #4caf50;
   color: white;
   cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
 
 .button-container button.delete-accounts {
-  background-color: #4caf50;
+  background-color: #f44336;
+}
+
+.button-container button:hover {
+  background-color: #45a049;
 }
 
 .account-list {
@@ -68,6 +80,8 @@ h1 {
 }
 
 .account-list h3 {
+  color: #fff;
+  font-size: 18px;
   margin-bottom: 10px;
 }
 
@@ -78,6 +92,13 @@ h1 {
 
 .account-list li {
   cursor: pointer;
+  color: #fff;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.account-list li:hover {
+  color: #4caf50;
 }
 
 .file-editor {
@@ -90,6 +111,7 @@ h1 {
   padding: 5px;
   border-radius: 3px;
   border: 1px solid #ccc;
+  font-size: 14px;
 }
 
 .file-editor button {
@@ -100,8 +122,14 @@ h1 {
   background-color: #4caf50;
   color: white;
   cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
 
 .file-editor button.close {
-  background-color: #4caf50;
+  background-color: #f44336;
+}
+
+.file-editor button:hover {
+  background-color: #45a049;
 }
