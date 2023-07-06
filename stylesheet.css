@@ -1,3 +1,4 @@
+<style>
 body {
   display: flex;
   justify-content: center;
@@ -77,6 +78,7 @@ h1 {
 
 .account-list {
   margin-bottom: 20px;
+  text-align: center; /* Add this line to center the account list */
 }
 
 .account-list h3 {
@@ -133,3 +135,5 @@ h1 {
 .file-editor button:hover {
   background-color: #45a049;
 }
+
+</style>
