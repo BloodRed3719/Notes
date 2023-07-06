@@ -4,6 +4,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #222;
+  font-family: Arial, Sans-serif;
 }
 
 .parent-container {
