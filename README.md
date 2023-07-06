@@ -10,9 +10,9 @@ But for now, let Fred the stickman entertain you:
    /------------------------------------\            
    |Hello! I am fred! What is your name?|            
    /------------------------------------/            
-  O            
+   O            
  -|-            
-  |            
+   |            
  / \            
 
 
