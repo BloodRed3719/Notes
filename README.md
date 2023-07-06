@@ -7,8 +7,8 @@ I will try to fix as many as possible.
 
 But for now, let Fred the stickman entertain you:
 
-   /------------------------------------\            
-   |Hello! I am fred! What is your name?|            
+         /------------------------------------\            
+         |Hello! I am fred! What is your name?|            
    /------------------------------------/            
    O            
  -|-            
