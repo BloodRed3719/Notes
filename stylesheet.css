@@ -32,6 +32,8 @@
       border: 1px solid #ccc;
       border-radius: 4px;
       resize: none;
+      /* Add the following line to make inputs the same size */
+      width: 100%;
     }
 
     .button-container {
