@@ -177,14 +177,14 @@
 <body onload="loadAccounts()">
     <div class="container">
         <h1>Notes</h1>
-        <div><label for="username">Username:</label> <input id="username" /></div>
-        <div><label for="password">Password:</label> <input id="password" type="password" /></div>
+        <div><label for="username" class="ph1">Username:</label> <input id="username" /></div>
+        <div><label for="password" class="ph1">Password:</label> <input id="password" type="password" /></div>
         <div class="button-container">
             <button onclick="createAccount()" class="create-account">Create Account</button>
             <button onclick="deleteAllAccounts()" class="delete-accounts">Delete All Accounts</button>
         </div>
         <div class="account-list">
-            <h3>Accounts:</h3>
+            <h3 class="ph1">Accounts:</h3>
             <ul id="account-list"></ul>
         </div>
         <div class="file-editor" id="file-editor" style="display: none;">
