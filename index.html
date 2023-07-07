@@ -98,7 +98,7 @@
     }
 
     function deleteAccount(username) {
-        var password = prompt("Enter password for " + username);
+        var password = prompt("Enter password for " + username + " to delete account.");
 
         var accountIndex = accounts.findIndex(function (account) {
             return account.username === username && account.password === password;
