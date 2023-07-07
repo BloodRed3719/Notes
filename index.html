@@ -10,6 +10,10 @@
         cursor: pointer;
         font-weight: bold;
     }
+
+    .comment-list.hidden {
+        display: none;
+    }
 </style>
 <script>
     var accounts = [];
@@ -50,7 +54,7 @@
             };
 
             var deleteButton = document.createElement("span");
-            deleteButton.textContent = " X";
+            deleteButton.textContent = "X";
             deleteButton.className = "delete-button";
             deleteButton.onclick = function (event) {
                 event.stopPropagation();
@@ -186,12 +190,40 @@
             commentItem.textContent = comment;
             commentList.appendChild(commentItem);
             document.getElementById("comment").value = ""; // Clear the comment textarea
+
+            // Store the updated comments in local storage
+            var comments = localStorage.getItem("comments");
+            if (comments) {
+                comments = JSON.parse(comments);
+            } else {
+                comments = [];
+            }
+            comments.push(comment);
+            localStorage.setItem("comments", JSON.stringify(comments));
         } else {
             alert("Please enter a comment before submitting.");
         }
     }
+
+    function loadComments() {
+        var commentList = document.getElementById("comment-list");
+        var comments = localStorage.getItem("comments");
+        if (comments) {
+            comments = JSON.parse(comments);
+            comments.forEach(function (comment) {
+                var commentItem = document.createElement("li");
+                commentItem.textContent = comment;
+                commentList.appendChild(commentItem);
+            });
+        }
+    }
+
+    function toggleComments() {
+        var commentList = document.getElementById("comment-list");
+        commentList.classList.toggle("hidden");
+    }
 </script>
-<body onload="loadAccounts()">
+<body onload="loadAccounts(); loadComments()">
     <div class="container">
         <h1>Notes</h1>
         <div>
@@ -217,7 +249,8 @@
                 <textarea id="comment"></textarea>
             </div>
             <button onclick="submitComment()">Submit Comment</button>
-            <ul id="comment-list"></ul>
+            <button onclick="toggleComments()">Show/Hide Comments</button>
+            <ul id="comment-list" class="comment-list hidden"></ul>
         </div>
         <div class="file-editor" id="file-editor" style="display: none;">
             <textarea></textarea>
