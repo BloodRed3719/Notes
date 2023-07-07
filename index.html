@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <title>Notes</title>
+<style>
+    .delete-button {
+        color: red;
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>
 <script>
     var accounts = [];
     var correctPassword = "password"; // Replace with your actual password
@@ -38,15 +45,16 @@
                 signIn(username);
             };
 
-            var deleteButton = document.createElement("button");
-            deleteButton.textContent = "Delete";
+            var deleteButton = document.createElement("span");
+            deleteButton.textContent = "X";
+            deleteButton.className = "delete-button";
             deleteButton.onclick = function (event) {
                 event.stopPropagation();
                 deleteAccount(username);
             };
 
+            account.appendChild(deleteButton);
             accountList.appendChild(account);
-            accountList.appendChild(deleteButton);
 
             saveAccounts();
 
@@ -128,15 +136,17 @@
                 accountItem.onclick = function () {
                     signIn(account.username);
                 };
-                accountList.appendChild(accountItem);
 
-                var deleteButton = document.createElement("button");
-                deleteButton.textContent = "Delete";
+                var deleteButton = document.createElement("span");
+                deleteButton.textContent = "X";
+                deleteButton.className = "delete-button";
                 deleteButton.onclick = function (event) {
                     event.stopPropagation();
                     deleteAccount(account.username);
                 };
+
                 accountItem.appendChild(deleteButton);
+                accountList.appendChild(accountItem);
             });
         }
     }
