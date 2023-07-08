@@ -10,10 +10,6 @@
         cursor: pointer;
         font-weight: bold;
     }
-
-    .comment-list.hidden {
-        display: none;
-    }
 </style>
 <script>
     var accounts = [];
@@ -181,59 +177,12 @@
         var editor = document.getElementById("file-editor");
         editor.style.display = "none";
     }
-
-    function submitComment() {
-        var comment = document.getElementById("comment").value;
-        if (comment) {
-            var commentList = document.getElementById("comment-list");
-            var commentItem = document.createElement("li");
-            commentItem.textContent = comment;
-            commentList.appendChild(commentItem);
-            document.getElementById("comment").value = ""; // Clear the comment textarea
-
-            // Store the updated comments in local storage
-            var comments = localStorage.getItem("comments");
-            if (comments) {
-                comments = JSON.parse(comments);
-            } else {
-                comments = [];
-            }
-            comments.push(comment);
-            localStorage.setItem("comments", JSON.stringify(comments));
-        } else {
-            alert("Please enter a comment before submitting.");
-        }
-    }
-
-    function loadComments() {
-        var commentList = document.getElementById("comment-list");
-        var comments = localStorage.getItem("comments");
-        if (comments) {
-            comments = JSON.parse(comments);
-            comments.forEach(function (comment) {
-                var commentItem = document.createElement("li");
-                commentItem.textContent = comment;
-                commentList.appendChild(commentItem);
-            });
-        }
-    }
-
-    function toggleComments() {
-        var commentList = document.getElementById("comment-list");
-        commentList.classList.toggle("hidden");
-    }
 </script>
-<body onload="loadAccounts(); loadComments()">
+<body onload="loadAccounts()">
     <div class="container">
         <h1>Notes</h1>
-        <div>
-            <label for="username">Username:</label>
-            <input id="username" />
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input id="password" type="password" />
-        </div>
+        <div><label for="username">Username:</label> <input id="username" /></div>
+        <div><label for="password">Password:</label> <input id="password" type="password" /></div>
         <div class="button-container">
             <button onclick="createAccount()" class="create-account">Create Account</button>
             <button onclick="deleteAllAccounts()" class="delete-accounts">Delete All Accounts</button>
@@ -241,16 +190,6 @@
         <div class="account-list">
             <h3>Accounts:</h3>
             <ul id="account-list"></ul>
-        </div>
-        <div class="comment-section">
-            <h3>Comments:</h3>
-            <div>
-                <label for="comment">Leave a comment:</label>
-                <textarea id="comment"></textarea>
-            </div>
-            <button onclick="submitComment()">Submit Comment</button>
-            <button onclick="toggleComments()">Show/Hide Comments</button>
-            <ul id="comment-list" class="comment-list hidden"></ul>
         </div>
         <div class="file-editor" id="file-editor" style="display: none;">
             <textarea></textarea>
@@ -260,3 +199,4 @@
     </div>
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </body>
+ChatGPT
