@@ -13,11 +13,11 @@ firebase_admin.initialize_app(cred, {
 
 @app.route('/')
 def index():
-    return render_template('form.html')
+    return render_template('index.html')
 
 @app.route('/store', methods=['POST'])
 def store():
-    value = request.form['value']
+    value = request.['value']
 
     # Save the value to Firebase Realtime Database
     ref = db.reference('/values')
