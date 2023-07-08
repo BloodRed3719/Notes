@@ -79,7 +79,7 @@
           padding: 8px 20px;
           border: none;
           border-radius: 3px;
-          background-color: #4caf50;
+          background-color: green;
           color: white;
           cursor: pointer;
           font-size: 14px;
@@ -87,7 +87,7 @@
         }
         
         .button-container button.delete-accounts {
-          background-color: #f44336;
+          background-color: red;
         }
         
         .button-container button:hover {
@@ -196,6 +196,16 @@
         };
         firebase.initializeApp(firebaseConfig);
 
+        function createAccount() {
+            // Placeholder implementation for creating an account
+            alert("Create Account button clicked!");
+        }
+
+        function deleteAllAccounts() {
+            // Placeholder implementation for deleting all accounts
+            alert("Delete All Accounts button clicked!");
+        }
+
         function submitComment() {
             var comment = document.getElementById("comment").value;
             if (comment) {
@@ -247,7 +257,7 @@
                 });
         }
 
-function toggleComments() {
+        function toggleComments() {
             var commentList = document.getElementById("comment-list");
             commentList.classList.toggle("hidden");
         }
