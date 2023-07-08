@@ -18,7 +18,7 @@
         }
     </style>
 </head>
-<body onload="loadAccounts(); loadComments()">
+<body>
     <div class="container">
         <h1>Notes</h1>
         <div>
@@ -48,11 +48,6 @@
             <button onclick="deleteAllComments()">Delete All Comments</button>
             <ul id="comment-list" class="comment-list hidden"></ul>
         </div>
-        <div class="file-editor" id="file-editor" style="display: none;">
-            <textarea></textarea>
-            <button onclick="saveFile()">Save</button>
-            <button onclick="closeEditor()">Close</button>
-        </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -64,174 +59,27 @@
         };
         firebase.initializeApp(firebaseConfig);
 
-        var accounts = [];
-        var correctPassword = "password"; // Replace with your actual password
-        var deleteKey = "Oliverbarnetmasonlongenrique"; // Replace with your special key
-
-        function createAccount() {
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-            if (username && password) {
-                var existingAccount = accounts.find(function (account) {
-                    return account.username === username;
-                });
-
-                if (existingAccount) {
-                    alert("Username is already taken. Please choose a different username.");
-                    return;
-                }
-
-                accounts.push({
-                    username: username,
-                    password: password,
-                });
-
-                createFile(username);
-
-                var accountList = document.getElementById("account-list");
-                var account = document.createElement("li");
-                account.textContent = username;
-                account.onclick = function () {
-                    signIn(username);
-                };
-
-                var deleteButton = document.createElement("span");
-                deleteButton.textContent = "X";
-                deleteButton.className = "delete-button";
-                deleteButton.onclick = function (event) {
-                    event.stopPropagation();
-                    deleteAccount(username);
-                };
-
-                account.appendChild(deleteButton);
-                accountList.appendChild(account);
-
-                saveAccounts();
-
-                alert("Account created successfully!");
-            } else {
-                alert("Please enter a username and password.");
-            }
-        }
-
-        function signIn(username) {
-            var password = prompt("Enter password for " + username);
-
-            var account = accounts.find(function (account) {
-                return account.username === username;
-            });
-
-            if (account && password === account.password) {
-                openFile(username);
-            } else {
-                alert("Incorrect password. Please try again.");
-            }
-        }
-
-        function createFile(username) {
-            var content = "Welcome, " + username + "! This is your personal file.";
-            localStorage.setItem(username, content);
-        }
-
-        function deleteAllAccounts() {
-            var deleteConfirmation = prompt("Enter the delete key to confirm deletion of all accounts");
-
-            if (deleteConfirmation === deleteKey) {
-                localStorage.clear();
-                accounts = [];
-                var accountList = document.getElementById("account-list");
-                accountList.innerHTML = "";
-                alert("All accounts deleted successfully!");
-            } else {
-                alert("Incorrect delete key. Deletion aborted.");
-            }
-        }
-
-        function deleteAccount(username) {
-            var password = prompt("Enter password for " + username);
-
-            var accountIndex = accounts.findIndex(function (account) {
-                return account.username === username && account.password === password;
-            });
-
-            if (accountIndex !== -1) {
-                accounts.splice(accountIndex, 1);
-                localStorage.removeItem(username);
-
-                var accountList = document.getElementById("account-list");
-                var account = document.querySelector("li[data-username='" + username + "']");
-                accountList.removeChild(account);
-
-                saveAccounts();
-
-                alert("Account deleted successfully!");
-            } else {
-                alert("Incorrect password. Account deletion aborted.");
-            }
-        }
-
-        function saveAccounts() {
-            localStorage.setItem("accounts", JSON.stringify(accounts));
-        }
-
-        function loadAccounts() {
-            var accountList = document.getElementById("account-list");
-            var savedAccounts = localStorage.getItem("accounts");
-            if (savedAccounts) {
-                accounts = JSON.parse(savedAccounts);
-                accounts.forEach(function (account) {
-                    var accountItem = document.createElement("li");
-                    accountItem.textContent = account.username;
-                    accountItem.dataset.username = account.username;
-                    accountItem.onclick = function () {
-                        signIn(account.username);
-                    };
-
-                    var deleteButton = document.createElement("span");
-                    deleteButton.textContent = "X";
-                    deleteButton.className = "delete-button";
-                    deleteButton.onclick = function (event) {
-                        event.stopPropagation();
-                        deleteAccount(account.username);
-                    };
-
-                    accountItem.appendChild(deleteButton);
-                    accountList.appendChild(accountItem);
-                });
-            }
-        }
-
-        function openFile(username) {
-            var content = localStorage.getItem(username);
-            var editor = document.getElementById("file-editor");
-            var textarea = editor.querySelector("textarea");
-            textarea.value =content;
-            editor.style.display = "block";
-            editor.dataset.username = username;
-        }
-
-        function saveFile() {
-            var editor = document.getElementById("file-editor");
-            var textarea = editor.querySelector("textarea");
-            var username = editor.dataset.username;
-            var content = textarea.value;
-            localStorage.setItem(username, content);
-            alert("File saved successfully!");
-        }
-
-        function closeEditor() {
-            var editor = document.getElementById("file-editor");
-            editor.style.display = "none";
-        }
-
         function submitComment() {
             var comment = document.getElementById("comment").value;
             if (comment) {
-                // Send the comment to Firebase Realtime Database
-                var commentsRef = firebase.database().ref("comments");
-                commentsRef.push(comment);
-
-                document.getElementById("comment").value = ""; // Clear the comment textarea
+                // Send the comment to the server-side application
+                fetch('/store', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'value=' + encodeURIComponent(comment)
+                })
+                .then(function(response) {
+                    if (response.ok) {
+                        document.getElementById("comment").value = ""; // Clear the comment textarea
+                    } else {
+                        alert("Error storing comment: " + response.statusText);
+                    }
+                })
+                .catch(function(error) {
+                    alert("Error storing comment: " + error.message);
+                });
             } else {
                 alert("Please enter a comment before submitting.");
             }
@@ -240,7 +88,7 @@
         function loadComments() {
             var commentList = document.getElementById("comment-list");
             commentList.innerHTML = ""; // Clear the existing comments
-            var commentsRef = firebase.database().ref("comments");
+            var commentsRef = firebase.database().ref("values");
             commentsRef.on("child_added", function(snapshot) {
                 var comment = snapshot.val();
                 var commentItem = document.createElement("li");
@@ -250,7 +98,7 @@
         }
 
         function deleteAllComments() {
-            var commentsRef = firebase.database().ref("comments");
+            var commentsRef = firebase.database().ref("values");
             commentsRef.remove()
                 .then(function () {
                     var commentList = document.getElementById("comment-list");
@@ -266,16 +114,11 @@
             var commentList = document.getElementById("comment-list");
             commentList.classList.toggle("hidden");
         }
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script>
-        // Initialize Firebase
-        var firebaseConfig = {
-            // Add your Firebase project configuration here
+
+        // Load comments when the page loads
+        window.onload = function() {
+            loadComments();
         };
-        firebase.initializeApp(firebaseConfig);
     </script>
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </body>
 </html>
