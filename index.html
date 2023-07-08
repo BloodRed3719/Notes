@@ -18,7 +18,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="loadAccounts(); loadComments()">
     <div class="container">
         <h1>Notes</h1>
         <div>
@@ -205,7 +205,7 @@
             var content = localStorage.getItem(username);
             var editor = document.getElementById("file-editor");
             var textarea = editor.querySelector("textarea");
-            textarea.value = content;
+            textarea.value =content;
             editor.style.display = "block";
             editor.dataset.username = username;
         }
@@ -231,10 +231,6 @@
                 var commentsRef = firebase.database().ref("comments");
                 commentsRef.push(comment);
 
-                var commentList = document.getElementById("comment-list");
-                var commentItem = document.createElement("li");
-                commentItem.textContent = comment;
-                commentList.appendChild(commentItem);
                 document.getElementById("comment").value = ""; // Clear the comment textarea
             } else {
                 alert("Please enter a comment before submitting.");
