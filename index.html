@@ -174,16 +174,9 @@
             <h3>Accounts:</h3>
             <ul id="account-list"></ul>
         </div>
-        <div class="comment-section">
+        <div class="comment-section hidden">
             <h3>Comments:</h3>
-            <div>
-                <label for="comment">Leave a comment:</label>
-                <textarea id="comment"></textarea>
-            </div>
-            <button onclick="submitComment()">Submit Comment</button>
-            <button onclick="toggleComments()">Show/Hide Comments</button>
-            <button onclick="deleteAllComments()">Delete All Comments</button>
-            <ul id="comment-list" class="comment-list hidden"></ul>
+            <ul id="comment-list" class="comment-list"></ul>
         </div>
     </div>
 
@@ -206,32 +199,6 @@
             alert("Delete All Accounts button clicked!");
         }
 
-        function submitComment() {
-            var comment = document.getElementById("comment").value;
-            if (comment) {
-                // Send the comment to the server-side application
-                fetch('/store', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'value=' + encodeURIComponent(comment)
-                })
-                .then(function(response) {
-                    if (response.ok) {
-                        document.getElementById("comment").value = ""; // Clear the comment textarea
-                    } else {
-                        alert("Error storing comment: " + response.statusText);
-                    }
-                })
-                .catch(function(error) {
-                    alert("Error storing comment: " + error.message);
-                });
-            } else {
-                alert("Please enter a comment before submitting.");
-            }
-        }
-
         function loadComments() {
             var commentList = document.getElementById("comment-list");
             commentList.innerHTML = ""; // Clear the existing comments
@@ -242,24 +209,6 @@
                 commentItem.textContent = comment;
                 commentList.appendChild(commentItem);
             });
-        }
-
-        function deleteAllComments() {
-            var commentsRef = firebase.database().ref("values");
-            commentsRef.remove()
-                .then(function () {
-                    var commentList = document.getElementById("comment-list");
-                    commentList.innerHTML = "";
-                    alert("All comments deleted successfully!");
-                })
-                .catch(function (error) {
-                    alert("Error deleting comments: " + error.message);
-                });
-        }
-
-        function toggleComments() {
-            var commentList = document.getElementById("comment-list");
-            commentList.classList.toggle("hidden");
         }
 
         // Load comments when the page loads
